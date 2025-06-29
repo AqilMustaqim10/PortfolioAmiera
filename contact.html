@@ -32,8 +32,7 @@
         <!-- Contact Section -->
         <section class="contact-section">
           <h1>Contact Me</h1>
-          <!-- use GET with anchor to popup -->
-          <form action="#popup" method="get">
+          <form id="contactForm">
             <label for="name">Name</label>
             <input
               type="text"
@@ -65,11 +64,16 @@
         </section>
       </main>
 
-      <!-- Popup Message (Triggered by anchor) -->
+      <!-- Popup Message (Hidden initially) -->
       <div id="popup" class="popup-box">
         <div class="popup-content">
           <a href="#" class="close-btn" title="Close">&times;</a>
           <p>Thank you! Your message has been sent.</p>
+          <p>Do you want to download my certificate?</p>
+          <div class="popup-buttons">
+            <button id="yesBtn">Yes</button>
+            <button id="noBtn">No</button>
+          </div>
         </div>
       </div>
 
@@ -78,5 +82,39 @@
         <p>&copy; 2025 Izzaty Amiera. All rights reserved.</p>
       </footer>
     </div>
+
+    <script>
+      const form = document.getElementById("contactForm");
+      const popup = document.getElementById("popup");
+      const yesBtn = document.getElementById("yesBtn");
+      const noBtn = document.getElementById("noBtn");
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        // Normally: send form via fetch/ajax here...
+
+        // Show popup
+        popup.style.display = "flex";
+      });
+
+      yesBtn.addEventListener("click", () => {
+        // Trigger certificate download
+        const link = document.createElement("a");
+        link.href = "pdf/CertificateAmiera.pdf"; // adjust file path
+        link.download = "Izzaty_Amiera_Certificate.pdf";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        popup.style.display = "none";
+        form.reset();
+      });
+
+      noBtn.addEventListener("click", () => {
+        popup.style.display = "none";
+        form.reset();
+      });
+    </script>
   </body>
 </html>
